@@ -1,7 +1,7 @@
 [project]
 name = "picasso-tower"
 version = "0.1.0"
-description = "A logic puzzle solver using hints and floors"
+description = "Picasso tower solution for Hexagate/Chainalisys interview"
 authors = [{ name = "Eddie Dima" }]
 readme = "README.md"
 license = { file = "LICENSE" }
