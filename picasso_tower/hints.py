@@ -1,9 +1,17 @@
+from abc import ABC, abstractmethod
 from picasso_tower.primitives import Floor, Animal, Color
 
 
-class Hint:
-    def satisfied_with(self, animal_to_floor, color_to_floor):
-        raise NotImplementedError
+class Hint(ABC):    
+    def __init__(self, attr1, attr2):
+        self._attr1 = attr1
+        self._attr2 = attr2
+
+    @abstractmethod
+    def satisfied_with(self, 
+                       animal_to_floor: dict[Animal, Floor], 
+                       color_to_floor: dict[Color, Floor]) -> bool:
+        pass
     
     
     def _get_floor_of_attr(self, attr, animal_to_floor, color_to_floor):
@@ -18,8 +26,7 @@ class Hint:
 
 class AbsoluteHint(Hint):
     def __init__(self, attr1, attr2):
-        self._attr1 = attr1
-        self._attr2 = attr2
+        super().__init__(attr1, attr2)
 
     def satisfied_with(self, animal_to_floor, color_to_floor):
         return self._get_floor_of_attr(self._attr1, animal_to_floor, color_to_floor) == \
@@ -28,8 +35,7 @@ class AbsoluteHint(Hint):
 
 class RelativeHint(Hint):
     def __init__(self, attr1, attr2, difference):
-        self._attr1 = attr1
-        self._attr2 = attr2
+        super().__init__(attr1, attr2)
         self._difference = difference
 
     def satisfied_with(self, animal_to_floor, color_to_floor):
@@ -40,8 +46,7 @@ class RelativeHint(Hint):
 
 class NeighborHint(Hint):
     def __init__(self, attr1, attr2):
-        self._attr1 = attr1
-        self._attr2 = attr2
+        super().__init__(attr1, attr2)
 
     def satisfied_with(self, animal_to_floor, color_to_floor):
         f1 = self._get_floor_of_attr(self._attr1, animal_to_floor, color_to_floor)
